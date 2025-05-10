@@ -25,7 +25,7 @@ class TransformCSVDataLocal(TransformDataStrategy):
         for col in sanitized_df.columns:
             if sanitized_df[col].dtype == pl.Utf8:
                 sanitized_df = sanitized_df.with_columns(
-                    pl.col(col).apply(self._sanitize_it).alias(col)
+                    pl.col(col).map_elements(self._sanitize_it, return_dtype=str).alias(col)
                 )
 
         sanitized_df.write_parquet(self.config['stage_path'])

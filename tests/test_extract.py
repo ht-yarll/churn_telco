@@ -7,7 +7,7 @@ def test_transform_csv_data_local_returns_df(tmp_path):
     file_path = tmp_path / "test.csv"
     file_path.write_text("nome,idade\nJoão,30\nMaria,40")
 
-    extractor = ExtractFromLocalCSV()
+    extractor = ExtractFromLocalCSV(tmp_path)
     dfs = extractor.extract()
     
     assert isinstance(dfs, list)
