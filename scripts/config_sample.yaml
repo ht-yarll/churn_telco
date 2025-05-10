@@ -1,0 +1,11 @@
+raw_path: P:\path\to\your\raw\data\folder
+stage_path: P:\path\to\your\stage\folder
+
+databanks:
+  postgres:
+    db_uri: "postgresql://username:password@localhost:5432/postgres"
+    set_name:
+      dataset: 'delta_froms'
+      table_name: 'lorem_ipsum'
+      if_exists: 'replace' # Eu uso o replace como padrão, mas pode ser 'append' ou 'fail' tbm
+      chunksize: '10000' # utilizado com arquivos muito grandes
