@@ -70,12 +70,49 @@ Recomenda-se uso de:
 * 🔿️ Gráficos de dispersão
 * 🔢 Boxplots por tipo de plano e gasto mensal
 
+## 📁Folders Structure
+
+````
+
+└── 📁churn_telco
+    └── 📁churn_telco
+        └── __init__.py
+        └── 📁context
+            └── etl_context.py
+        └── main.py
+        └── 📁strategy
+            └── ExtractStrategy.py
+            └── LoadStrategy.py
+            └── TransformStrategy.py
+        └── 📁utils
+            └── __init__.py
+            └── config.py
+    └── 📁data
+        └── 📁raw
+            └── WA_Fn-UseC_-Telco-Customer-Churn.csv
+        └── 📁stage
+            └── tb_WA_Fn-UseC_-Telco-Customer-Churn.parquet
+    └── 📁scripts
+        └── config_sample.yaml
+    └── 📁tests
+        └── test_config_read.py
+        └── test_extract.py
+        └── test_load.py
+        └── test_main.py
+        └── test_transform.py
+    └── .gitignore
+    └── .python-version
+    └── config.yaml
+    └── README.md
+    └── requirements.txt
+````
+
 ## 📄 Observação Final
 
 Não serão incluídas as soluções neste README para incentivar a exploração independente. Sinta-se livre para compartilhar suas descobertas e visualizações.
 
----
+````---
 
-**Autor**: Humphry Torres
+**Autor**: humphry Torres
 **LinkedIn**: [humphrytorres](https://www.linkedin.com/in/humphrytorres)
 **GitHub**: [ht-yarll](https://github.com/ht-yarll)

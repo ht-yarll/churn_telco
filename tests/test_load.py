@@ -23,7 +23,6 @@ def test_transform_csv_data_local_returns_df(tmp_path):
                 "db_uri": c['databanks']['postgres']['db_uri'],
                 "set_name": {
                     "dataset": "test_dset",
-                    "table_name": "tb_test",
                     "if_exists": "replace",
                     "chunksize": 10000
               }
