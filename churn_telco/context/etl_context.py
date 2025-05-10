@@ -11,8 +11,8 @@ class ETLPostgresContext:
     def run(self):
         try:
             dfs = self.extractor.extract()
-            for df in dfs:
-                transformed = self.transform.transform(df)
-                self.load.load(transformed)
+            for filename, df in dfs:
+                transformed = self.transform.transform(df, filename)
+                self.load.load()
         except Exception as e:
-            return f'Not possible tp run context: {e}'
+            print(f"❌ Error while running ETL context: {e}")

@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 import re
 import unicodedata
+import pathlib
+
 import polars as pl
 
 class TransformDataStrategy(ABC):
@@ -12,13 +14,13 @@ class TransformCSVDataLocal(TransformDataStrategy):
     def __init__(self, config: dict):
         self.config = config
 
-    def transform(self, df) -> pl.DataFrame:
+    def transform(self, df: pl.DataFrame, filename: str) -> pl.DataFrame:
         renamed_cols = {
             col: self._sanitize_column_names(col) for col in df.columns
         }
-        print(100*'=')
+        print(200*'=')
         print("🔁 Renamed columns:", renamed_cols)
-        print(100*'=')
+        print(200*'=')
         sanitized_df = df.rename(renamed_cols)
 
         for col in sanitized_df.columns:
@@ -27,9 +29,13 @@ class TransformCSVDataLocal(TransformDataStrategy):
                     pl.col(col).map_elements(self._sanitize_it, return_dtype=str).alias(col)
                 )
 
-        sanitized_df.write_parquet(self.config['stage_path'])
+        stage_dir = pathlib.Path(self.config['stage_path'])
+        stage_dir.mkdir(parents=True, exist_ok=True)
+
+
+        output_path =  stage_dir / f'tb_{filename}.parquet'
+        sanitized_df.write_parquet(str(output_path))
         print('🟢 Success On Basic Transformation')
-        df.write_parquet(self.config['stage_path'])
         return sanitized_df
     
     def _sanitize_it(self, text):
