@@ -3,7 +3,7 @@ from churn_telco.strategy.ExtractStrategy import ExtractFromLocalCSV
 
 import polars as pl
 
-def test_transform_csv_data_local_returns_df():
+def test_transform_csv_data_local_returns_df(tmp_path):
     file_path = tmp_path / "test.csv"
     file_path.write_text("nome,idade\nJoão,30\nMaria,40")
 

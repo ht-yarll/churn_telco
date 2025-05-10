@@ -4,7 +4,7 @@ from churn_telco.strategy.TransformStrategy import TransformCSVDataLocal
 
 import polars as pl
 
-def test_transform_csv_data_local_returns_df():
+def test_transform_csv_data_local_returns_df(tmp_path):
     df = pl.DataFrame({
     "Nome": ["José", "MÁRIA", "João!"],
     "Idade": ["30", "40", "50"]
