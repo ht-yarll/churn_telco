@@ -9,18 +9,17 @@ class TransformDataStrategy(ABC):
         ...
 
 class TransformCSVDataLocal(TransformDataStrategy):
-    def __init__(self, df: pl.DataFrame, config: dict):
-        self.df = df
+    def __init__(self, config: dict):
         self.config = config
 
-    def transform(self) -> pl.DataFrame:
+    def transform(self, df) -> pl.DataFrame:
         renamed_cols = {
-            col: self._sanitize_column_names(col) for col in self.df.columns
+            col: self._sanitize_column_names(col) for col in df.columns
         }
         print(100*'=')
         print("🔁 Renamed columns:", renamed_cols)
         print(100*'=')
-        sanitized_df = self.df.rename(renamed_cols)
+        sanitized_df = df.rename(renamed_cols)
 
         for col in sanitized_df.columns:
             if sanitized_df[col].dtype == pl.Utf8:
@@ -30,6 +29,7 @@ class TransformCSVDataLocal(TransformDataStrategy):
 
         sanitized_df.write_parquet(self.config['stage_path'])
         print('🟢 Success On Basic Transformation')
+        df.write_parquet(self.config['stage_path'])
         return sanitized_df
     
     def _sanitize_it(self, text):

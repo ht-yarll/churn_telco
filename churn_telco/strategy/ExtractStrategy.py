@@ -10,8 +10,8 @@ class ExtractDataStrategy(ABC):
 
 
 class ExtractFromLocalCSV(ExtractDataStrategy):
-    def __init__(self, file_path: pathlib.Path):
-        self.file_path = file_path
+    def __init__(self, config: dict):
+        self.file_path = pathlib.Path(config['raw_path'])
 
     def extract(self):
         dataframes = self._read_csv()

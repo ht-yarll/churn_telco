@@ -13,8 +13,8 @@ def test_transform_csv_data_local_returns_df(tmp_path):
 
     config = {"stage_path": str(stage_path)}
 
-    transformer = TransformCSVDataLocal(df, config)
-    result_df = transformer.transform()
+    transformer = TransformCSVDataLocal(config)
+    result_df = transformer.transform(df)
 
     assert isinstance(result_df, pl.DataFrame)
     assert stage_path.exists()
