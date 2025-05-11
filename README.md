@@ -42,6 +42,17 @@ Quais são os perfis mais comuns entre os clientes que cancelaram o serviço?
 **Objetivo:**
 Identificar padrões sociodemográficos e de contratação que estejam mais associados ao churn.
 
+````pgsql
+SELECT
+	COUNT(*) AS qtn_churn,
+	gender,
+	contract
+FROM churn_telco.tb_wa_fn_usec__telco_customer_churn
+WHERE churn = 'Yes'
+GROUP BY gender, contract
+ORDER BY qtn_churn DESC
+````
+
 ### 🔹 Desafio 2: Cobrança Média por Tipo de Internet (Clientes Ativos)
 
 **Pergunta:**
@@ -52,6 +63,15 @@ Qual é a média de cobrança mensal entre os clientes que ainda estão ativos (
 * `monthlycharges`
 * `internetservice`
 * `churn`
+
+````pgsql
+SELECT
+	ROUND(AVG(monthlycharges::DECIMAL), 2) AS avg_monthly_charges,
+	internetservice AS internet_service
+FROM churn_telco.tb_wa_fn_usec__telco_customer_churn
+GROUP BY internetservice 
+ORDER BY avg_monthly_charges DESC
+````
 
 ### 🔹 Desafio 3: Top 3 Métodos de Pagamento Mais Associados a Cancelamentos
 
@@ -66,6 +86,17 @@ Quais métodos de pagamento são mais utilizados por clientes que cancelaram o s
 **Objetivo:**
 Listar os três métodos de pagamento com maior número de cancelamentos (`churn = 'Yes'`) e analisar se há concentração em alguma forma de pagamento específica.
 
+````pgsql
+SELECT 
+	paymentmethod AS payment_method,
+	count(*) AS churned_customers
+FROM churn_telco.tb_wa_fn_usec__telco_customer_churn
+WHERE churn = 'Yes'
+GROUP BY payment_method 
+ORDER BY churned_customers DESC
+LIMIT 3
+````
+
 ### 🔹 Desafio 4: Tempo Médio de Permanência e Proteção de Dispositivo
 
 **Pergunta:**
@@ -77,6 +108,15 @@ Existe diferença significativa no tempo médio de permanência (`tenure`) entre
 * Cruzar com o tipo de `contract` para maior detalhamento.
 * Focar inicialmente em clientes ativos, se necessário.
 
+````pgsql
+SELECT
+	ROUND(AVG(tenure::decimal), 2) AS avg_tenure,
+	deviceprotection AS device_protection
+FROM churn_telco.tb_wa_fn_usec__telco_customer_churn
+GROUP BY device_protection 
+ORDER BY avg_tenure DESC
+````
+
 ### 🔹 Desafio 5 (Extra): Comparação Geral de Permanência
 
 **Pergunta adicional:**
@@ -84,6 +124,32 @@ Como o tempo de permanência varia entre diferentes combinações de serviços c
 
 **Objetivo:**
 Encontrar combinações de serviços que favorecem a retenção e auxiliar na definição de estratégias de fidelização.
+
+````pgsql
+-- Com Churn
+SELECT
+	ROUND(AVG(tenure::decimal), 2) AS avg_tenure,
+	techsupport AS tech_supp,
+	streamingmovies  AS streaming_movies,
+	streamingtv  AS streaming_tv,
+	internetservice  AS internet_service
+FROM churn_telco.tb_wa_fn_usec__telco_customer_churn
+WHERE churn = 'Yes'
+GROUP BY tech_supp, streaming_movies, streaming_tv, internet_service 
+ORDER BY avg_tenure DESC
+
+-- Sem Churn
+SELECT
+	ROUND(AVG(tenure::decimal), 2) AS avg_tenure,
+	techsupport AS tech_supp,
+	streamingmovies  AS streaming_movies,
+	streamingtv  AS streaming_tv,
+	internetservice  AS internet_service
+FROM churn_telco.tb_wa_fn_usec__telco_customer_churn
+WHERE churn = 'No'
+GROUP BY tech_supp, streaming_movies, streaming_tv, internet_service 
+ORDER BY avg_tenure DESC
+````
 
 ## 📁Folders Structure
 
@@ -122,13 +188,6 @@ Encontrar combinações de serviços que favorecem a retenção e auxiliar na de
     └── requirements.txt
 ````
 
-## 📄 Observação Final
-
-Não serão incluídas as soluções neste README para incentivar a exploração independente. Sinta-se livre para compartilhar suas descobertas e visualizações.
-
-````---
-
 **Autor**: humphry Torres
 **LinkedIn**: [humphrytorres](https://www.linkedin.com/in/humphrytorres)
 **GitHub**: [ht-yarll](https://github.com/ht-yarll)
-````
