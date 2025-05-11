@@ -30,45 +30,60 @@ O conjunto de dados contém informações demográficas dos clientes, detalhes d
 
 ### 🔹 Desafio 1: Perfil dos Clientes que Cancelaram
 
-**Pergunta**: Quais são os perfis mais comuns entre os clientes que cancelaram o serviço?
+**Pergunta:**
+Quais são os perfis mais comuns entre os clientes que cancelaram o serviço?
 
-Sugestão de filtros para segmentação:
+**Sugerido analisar por:**
 
-* Gênero
-* Tipo de plano (serviço contratado)
-* Tempo de contrato
+* `gender` (Gênero)
+* `internetservice` (Tipo de plano de internet)
+* `contract` (Tipo de contrato)
 
-### 🔹 Desafio 2: Identificação de Clientes em Risco de Churn
+**Objetivo:**
+Identificar padrões sociodemográficos e de contratação que estejam mais associados ao churn.
 
-**Pergunta**: Entre os clientes ativos, quais mostram padrões semelhantes aos clientes que cancelaram?
+### 🔹 Desafio 2: Cobrança Média por Tipo de Internet (Clientes Ativos)
 
-Sugestão de critérios para risco:
+**Pergunta:**
+Qual é a média de cobrança mensal entre os clientes que ainda estão ativos (`churn = 'No'`), segmentados por tipo de serviço de internet?
 
-* Alta idade + pouco tempo de contrato
-* Alta frequência de chamadas para o suporte
-* Atraso frequente no pagamento
+**Colunas relevantes:**
 
-### 🔹 Desafio 3: Receita Gerada por Clientes Ativos
+* `monthlycharges`
+* `internetservice`
+* `churn`
 
-**Pergunta**: Qual é a receita total gerada por clientes ativos, segmentada por tipo de plano?
+### 🔹 Desafio 3: Top 3 Métodos de Pagamento Mais Associados a Cancelamentos
 
-Utilizar colunas relacionadas a gasto mensal e serviços contratados.
+**Pergunta:**
+Quais métodos de pagamento são mais utilizados por clientes que cancelaram o serviço?
 
-### 🔹 Desafio 4: Taxa de Retenção Recentemente Engajados
+**Colunas relevantes:**
 
-**Pergunta**: Qual é a taxa de retenção de clientes ativos que interagiram com a empresa nos últimos 15 dias?
+* `paymentmethod`
+* `churn`
 
-Estratificar por tipo de plano e comparar com o total de clientes ativos.
+**Objetivo:**
+Listar os três métodos de pagamento com maior número de cancelamentos (`churn = 'Yes'`) e analisar se há concentração em alguma forma de pagamento específica.
 
-### 🔹 Desafio 5: Visualização de Fatores de Churn
+### 🔹 Desafio 4: Tempo Médio de Permanência e Proteção de Dispositivo
 
-**Pergunta**: Quais fatores mais se correlacionam com o cancelamento?
+**Pergunta:**
+Existe diferença significativa no tempo médio de permanência (`tenure`) entre os clientes que contratam ou não o serviço de **proteção de dispositivo**?
 
-Recomenda-se uso de:
+**Estratégia:**
 
-* 🔍 Heatmap de correlações
-* 🔿️ Gráficos de dispersão
-* 🔢 Boxplots por tipo de plano e gasto mensal
+* Comparar a média de `tenure` entre valores `Yes`, `No` e `No internet service` em `deviceprotection`.
+* Cruzar com o tipo de `contract` para maior detalhamento.
+* Focar inicialmente em clientes ativos, se necessário.
+
+### 🔹 Desafio 5 (Extra): Comparação Geral de Permanência
+
+**Pergunta adicional:**
+Como o tempo de permanência varia entre diferentes combinações de serviços contratados (ex: `streamingtv`, `techsupport`)?
+
+**Objetivo:**
+Encontrar combinações de serviços que favorecem a retenção e auxiliar na definição de estratégias de fidelização.
 
 ## 📁Folders Structure
 
@@ -116,3 +131,4 @@ Não serão incluídas as soluções neste README para incentivar a exploração
 **Autor**: humphry Torres
 **LinkedIn**: [humphrytorres](https://www.linkedin.com/in/humphrytorres)
 **GitHub**: [ht-yarll](https://github.com/ht-yarll)
+````
