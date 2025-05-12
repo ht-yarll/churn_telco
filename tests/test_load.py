@@ -1,5 +1,5 @@
 import pytest
-from churn_telco.strategy.LoadStrategy import LoadDataPostgres
+from churn_telco.strategy.LoadToPostgresStrategy import LoadDataPostgres
 from churn_telco.utils.config import load_config
 
 import polars as pl
