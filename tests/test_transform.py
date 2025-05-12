@@ -1,6 +1,6 @@
 import pytest
 
-from churn_telco.strategy.TransformStrategy import TransformCSVDataLocal
+from churn_telco.strategy.TransformCSVLocalStrategy import TransformCSVDataLocal
 
 import polars as pl
 
