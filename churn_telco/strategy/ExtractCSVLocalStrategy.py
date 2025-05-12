@@ -20,12 +20,13 @@ class ExtractFromLocalCSV(ExtractDataStrategy):
                     dataframes.append((file.stem, df))
                 elif extension in ['.gz', '.gzip']:
                     size_in_mb = file.stat().st_size / (1024 * 1024)
-                    if size_in_mb > 750:
-                        df = pl.read_csv_batched(file).collect()
-                        dataframes.append((file.stem, df))
-                    else:
+                    if size_in_mb < 750:
                         df = pl.read_csv(file)
                         dataframes.append((file.stem, df))
+                        
+                    df = pl.read_csv_batched(file).collect()
+                    dataframes.append((file.stem, df))
+ 
                 
             except Exception as e:
                 print(f'Unable to read csv: {e}')
