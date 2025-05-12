@@ -7,5 +7,5 @@ databanks:
     set_name:
       dataset: 'delta_froms'
       table_name: 'lorem_ipsum'
-      if_exists: 'replace' # Eu uso o replace como padrão, mas pode ser 'append' ou 'fail' tbm
-      chunksize: '10000' # utilizado com arquivos muito grandes
+      if_exists: 'replace' # I utilize 'replace' as default, but it could be 'append' or 'fail
+      chunksize: '10000' # Useful for large files
