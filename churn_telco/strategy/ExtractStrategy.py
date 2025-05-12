@@ -1,13 +1,6 @@
-from abc import ABC, abstractmethod
 import pathlib
-
+from churn_telco.interfaces.extract_strategy_interface import ExtractDataStrategy
 import polars as pl
-
-class ExtractDataStrategy(ABC):
-    @abstractmethod
-    def extract(self):
-        ...
-
 
 class ExtractFromLocalCSV(ExtractDataStrategy):
     def __init__(self, config: dict):
