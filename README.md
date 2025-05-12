@@ -1,6 +1,6 @@
 # 📊 Projeto de Análise de Churn - Telco Customer Churn Dataset (IBM)
 
-Este projeto tem como objetivo analisar e explorar dados de cancelamento de clientes (churn) no setor de telecomunicações, utilizando o dataset "Telco Customer Churn" disponibilizado pela IBM. O foco principal é a geração de insights visuais e análises descritivas que serão compartilhadas em forma de desafio no LinkedIn.
+Este projeto tem como objetivo analisar e explorar dados de cancelamento de clientes (churn) no setor de telecomunicações, utilizando o dataset "Telco Customer Churn" disponibilizado pela IBM. O foco principal é a geração de um processo de ETL onde extraímos os dados de um csv local, normalizamos para deixar nos padrões de uma tabela Postgres e em seguida carregamos no banco de dados.
 
 ## 📂 Fonte do Dataset
 
@@ -17,13 +17,15 @@ O conjunto de dados contém informações demográficas dos clientes, detalhes d
 * Prática com análise exploratória de dados reais
 * Segmentação e identificação de perfis de risco
 * Técnicas para lidar com dados faltantes e inconsistências
-* Criação de visualizações impactantes para comunicar insights
 * Formulação de hipóteses e validação com SQL e Python
+* Aplicação de conceitos dentro do SOLID
+* Exercício de Object Calisthenics
 
 ## 🛠️ Ferramentas Sugeridas
 
 * PostgreSQL (para queries analíticas)
-* Python (pandas, matplotlib, seaborn, plotly)
+* DBeaver (para acesso e conexão ao bancod e dados)
+* Python (pandas, poalrs)
 * Jupyter Notebook ou Google Colab
 
 ## 🎯 Desafios Propostos
@@ -44,9 +46,9 @@ Identificar padrões sociodemográficos e de contratação que estejam mais asso
 
 ````pgsql
 SELECT
-	COUNT(*) AS qtn_churn,
-	gender,
-	contract
+  COUNT(*) AS qtn_churn,
+  gender,
+  contract
 FROM churn_telco.tb_wa_fn_usec__telco_customer_churn
 WHERE churn = 'Yes'
 GROUP BY gender, contract
@@ -66,8 +68,8 @@ Qual é a média de cobrança mensal entre os clientes que ainda estão ativos (
 
 ````pgsql
 SELECT
-	ROUND(AVG(monthlycharges::DECIMAL), 2) AS avg_monthly_charges,
-	internetservice AS internet_service
+  ROUND(AVG(monthlycharges::DECIMAL), 2) AS avg_monthly_charges,
+  internetservice AS internet_service
 FROM churn_telco.tb_wa_fn_usec__telco_customer_churn
 GROUP BY internetservice 
 ORDER BY avg_monthly_charges DESC
@@ -88,8 +90,8 @@ Listar os três métodos de pagamento com maior número de cancelamentos (`churn
 
 ````pgsql
 SELECT 
-	paymentmethod AS payment_method,
-	count(*) AS churned_customers
+  paymentmethod AS payment_method,
+  count(*) AS churned_customers
 FROM churn_telco.tb_wa_fn_usec__telco_customer_churn
 WHERE churn = 'Yes'
 GROUP BY payment_method 
@@ -108,14 +110,14 @@ Existe diferença significativa no tempo médio de permanência (`tenure`) entre
 * Cruzar com o tipo de `contract` para maior detalhamento.
 * Focar inicialmente em clientes ativos, se necessário.
 
-````pgsql
+```
 SELECT
-	ROUND(AVG(tenure::decimal), 2) AS avg_tenure,
-	deviceprotection AS device_protection
+  ROUND(AVG(tenure::decimal), 2) AS avg_tenure,
+  deviceprotection AS device_protection
 FROM churn_telco.tb_wa_fn_usec__telco_customer_churn
 GROUP BY device_protection 
 ORDER BY avg_tenure DESC
-````
+```
 
 ### 🔹 Desafio 5 (Extra): Comparação Geral de Permanência
 
@@ -128,11 +130,11 @@ Encontrar combinações de serviços que favorecem a retenção e auxiliar na de
 ````pgsql
 -- Com Churn
 SELECT
-	ROUND(AVG(tenure::decimal), 2) AS avg_tenure,
-	techsupport AS tech_supp,
-	streamingmovies  AS streaming_movies,
-	streamingtv  AS streaming_tv,
-	internetservice  AS internet_service
+  ROUND(AVG(tenure::decimal), 2) AS avg_tenure,
+  techsupport AS tech_supp,
+  streamingmovies  AS streaming_movies,
+  streamingtv  AS streaming_tv,
+  internetservice  AS internet_service
 FROM churn_telco.tb_wa_fn_usec__telco_customer_churn
 WHERE churn = 'Yes'
 GROUP BY tech_supp, streaming_movies, streaming_tv, internet_service 
@@ -140,11 +142,11 @@ ORDER BY avg_tenure DESC
 
 -- Sem Churn
 SELECT
-	ROUND(AVG(tenure::decimal), 2) AS avg_tenure,
-	techsupport AS tech_supp,
-	streamingmovies  AS streaming_movies,
-	streamingtv  AS streaming_tv,
-	internetservice  AS internet_service
+  ROUND(AVG(tenure::decimal), 2) AS avg_tenure,
+  techsupport AS tech_supp,
+  streamingmovies  AS streaming_movies,
+  streamingtv  AS streaming_tv,
+  internetservice  AS internet_service
 FROM churn_telco.tb_wa_fn_usec__telco_customer_churn
 WHERE churn = 'No'
 GROUP BY tech_supp, streaming_movies, streaming_tv, internet_service 
