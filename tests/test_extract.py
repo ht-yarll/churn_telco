@@ -1,5 +1,5 @@
 import pytest
-from churn_telco.strategy.ExtractStrategy import ExtractFromLocalCSV
+from churn_telco.strategy.ExtractCSVLocalStrategy import ExtractFromLocalCSV
 
 import polars as pl
 

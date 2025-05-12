@@ -1,6 +1,6 @@
-from churn_telco.strategy.ExtractStrategy import ExtractDataStrategy
-from churn_telco.strategy.TransformStrategy import TransformDataStrategy
-from churn_telco.strategy.LoadStrategy import LoadDataStrategy
+from churn_telco.interfaces.load_strategy_interface import LoadDataStrategy
+from churn_telco.interfaces.extract_strategy_interface import ExtractDataStrategy
+from churn_telco.interfaces.transform_strategy_interface import TransformDataStrategy
 
 class ETLPostgresContext:
     def __init__(self, extractor: ExtractDataStrategy, transformer: TransformDataStrategy, loader: LoadDataStrategy):

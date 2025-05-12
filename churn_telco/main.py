@@ -1,7 +1,7 @@
 from churn_telco.utils.config import load_config
-from churn_telco.strategy.ExtractStrategy import ExtractFromLocalCSV
-from churn_telco.strategy.TransformStrategy import TransformCSVDataLocal
-from churn_telco.strategy.LoadStrategy import LoadDataPostgres
+from churn_telco.strategy.ExtractCSVLocalStrategy import ExtractFromLocalCSV
+from churn_telco.strategy.TransformCSVLocalStrategy import TransformCSVDataLocal
+from churn_telco.strategy.LoadToPostgresStrategy import LoadDataPostgres
 from churn_telco.context.etl_context import ETLPostgresContext
 
 def main():

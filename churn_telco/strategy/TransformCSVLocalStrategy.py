@@ -1,14 +1,11 @@
-from abc import ABC, abstractmethod
 import re
 import unicodedata
 import pathlib
 
+from churn_telco.interfaces.transform_strategy_interface import TransformDataStrategy
+
 import polars as pl
 
-class TransformDataStrategy(ABC):
-    @abstractmethod
-    def transform(self):
-        ...
 
 class TransformCSVDataLocal(TransformDataStrategy):
     def __init__(self, config: dict):

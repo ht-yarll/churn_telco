@@ -1,15 +1,11 @@
 import pathlib
-from abc import ABC, abstractmethod
-from typing import Literal
+
+from churn_telco.interfaces.load_strategy_interface import LoadDataStrategy
 
 import polars as pl
 import re
 from sqlalchemy import create_engine, inspect, text
 
-class LoadDataStrategy(ABC):
-    @abstractmethod
-    def load():
-        ...
 
 class LoadDataPostgres(LoadDataStrategy):
     def __init__(self, config:dict):
